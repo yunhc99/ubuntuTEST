@@ -1,7 +1,7 @@
 const http = require('http');
  
 const hostname = '0.0.0.0';
-const port = '9999';
+const port = '9000';
  
 // http모듈의 createServer 함수를 호출로 서버 생성
 // req: 웹 요청 매개변수, res: 웹 응답 매개변수
