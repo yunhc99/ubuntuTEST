@@ -1,19 +1,32 @@
-const http = require('http');
- 
-const hostname = '0.0.0.0';
-const port = '9000';
- 
-// http모듈의 createServer 함수를 호출로 서버 생성
-// req: 웹 요청 매개변수, res: 웹 응답 매개변수
-httpd = http.createServer(function (req, res) {
-    // writeHead: 응답 헤더를 작성
-    // 200: 응답 성공, text/html: html문서
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    // end: 응답 본문을 작성
-    res.end('Hello World111');   
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var router = require('./router/index');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+var flash = require('connect-flash');
+
+var port = 9000;
+
+app.listen(port, function() { //3000포트 비동기 콜백 함수 맨뒤에 실행
+    console.log("start! express server on port " + port);
 });
 
-// listen: 매개변수로 포트와 호스트를 지정
-httpd.listen(port, hostname, function(){    
-    console.log('server start');
-});
+app.use(express.static('public')); //폴터 정적(static)처리
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');
+//해당 폴더에 있는 이미지, js 불러오기 가능
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+app.use(router);
