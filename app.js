@@ -13,7 +13,7 @@ app.listen(port, function() { //3000포트 비동기 콜백 함수 맨뒤에 실
     console.log("start! express server on port " + port);
 });
 
-app.use(express.static('public')); //폴터 정적(static)처리
+app.use(express.static('html')); //폴터 정적(static)처리
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
